@@ -1,0 +1,414 @@
+/* Invoice Template Styles - PT ALIMA AMANAH LOGISTIC */
+
+/* Reset Dasar untuk mencegah hasil terpotong */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f0f2f5;
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+}
+
+/* Print Styles */
+@media print {
+    @page {
+        margin: 0;
+        size: 1080px 1050px;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    body {
+        background-color: white !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    #capture-container {
+        margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    html, body {
+        width: 1080px;
+        height: 1050px;
+        overflow: hidden;
+    }
+}
+
+/* Container Utama Invoice */
+#capture-container {
+    width: 1080px;
+    height: 1050px;
+    background-color: white;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    padding: 30px 40px;
+}
+
+/* Border Ganda Luar */
+.outer-data-frame {
+    border: 4px double #000;
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Tabel Utama */
+.main-invoice-table {
+    width: 100%;
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+    border: none !important;
+}
+
+.main-invoice-table th,
+.main-invoice-table td {
+    border: 1px solid #000 !important;
+    padding: 6px 8px;
+    font-size: 13px;
+    color: #000;
+    text-align: center;
+    vertical-align: top;
+}
+
+.main-invoice-table th {
+    font-weight: bold;
+    text-transform: uppercase;
+    height: 40px;
+    vertical-align: middle;
+}
+
+/* Support for multi-line content in table */
+.main-invoice-table td.align-top {
+    vertical-align: top !important;
+}
+
+.main-invoice-table td.align-middle {
+    vertical-align: middle !important;
+}
+
+.main-invoice-table tbody,
+.main-invoice-table thead,
+.main-invoice-table tfoot,
+.main-invoice-table tr {
+    border: none !important;
+}
+
+.main-invoice-table tbody tr td,
+.main-invoice-table thead tr th,
+.main-invoice-table tfoot tr td {
+    box-sizing: border-box;
+}
+
+/* Text Alignment */
+.text-left {
+    text-align: left !important;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+/* Panel Kontrol */
+.control-panel {
+    max-width: 1080px;
+    margin: 0 auto 30px auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.input-field {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    margin-top: 4px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+textarea.input-field {
+    resize: vertical;
+    min-height: 60px;
+    line-height: 1.4;
+}
+
+.section-label {
+    font-size: 12px;
+    font-weight: 800;
+    color: #4b5563;
+    text-transform: uppercase;
+}
+
+/* Bank Box */
+.bank-box {
+    border: 1px solid #000;
+    padding: 8px;
+    width: 380px;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.bank-box td {
+    border: none !important;
+    padding: 1px 4px !important;
+    text-align: left !important;
+}
+
+/* Footer optimizations */
+.footer-section {
+    margin-top: 16px;
+}
+
+/* Compact signature area */
+.signature-compact {
+    line-height: 1.2;
+}
+
+.signature-compact .signature-img {
+    max-height: 80px;
+    margin: 4px 0;
+}
+
+.signature-compact .company-logo-small {
+    height: 45px;
+    margin: 2px 0;
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: #3b82f6;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #2563eb;
+}
+
+.btn-success {
+    background-color: #10b981;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-success:hover {
+    background-color: #059669;
+}
+
+.btn-danger {
+    background-color: #ef4444;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: none;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
+}
+
+/* Logo Styles */
+.company-logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+}
+
+.signature-logo {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 4px;
+}
+
+/* Signature Area */
+.signature-area {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.signature-image {
+    max-height: 110px;
+    max-width: 100%;
+    object-fit: contain;
+    position: relative;
+    z-index: 10;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .control-panel {
+        padding: 15px;
+    }
+    
+    #capture-container {
+        transform: scale(0.8);
+        transform-origin: top center;
+        margin-bottom: -200px;
+    }
+}
+
+/* Custom Checkbox */
+input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #3b82f6;
+}
+
+/* Grid Layouts */
+.grid-cols-6 {
+    display: grid;
+    grid-template-columns: 2fr 1fr 80px 120px 80px;
+    gap: 8px;
+}
+
+.col-span-2 {
+    grid-column: span 2;
+}
+
+.grid-cols-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.grid-cols-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+/* Utility Classes */
+.space-y-2 > * + * {
+    margin-top: 8px;
+}
+
+.space-y-4 > * + * {
+    margin-top: 16px;
+}
+
+.border-t {
+    border-top: 1px solid #e5e7eb;
+}
+
+.border-b {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.pt-4 {
+    padding-top: 16px;
+}
+
+.pb-2 {
+    padding-bottom: 8px;
+}
+
+.mt-2 {
+    margin-top: 8px;
+}
+
+.mt-4 {
+    margin-top: 16px;
+}
+
+.mt-6 {
+    margin-top: 24px;
+}
+
+.mb-2 {
+    margin-bottom: 8px;
+}
+
+.mb-6 {
+    margin-bottom: 24px;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.items-end {
+    align-items: flex-end;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.gap-2 {
+    gap: 8px;
+}
+
+.gap-4 {
+    gap: 16px;
+}
+
+.text-sm {
+    font-size: 14px;
+}
+
+.text-xs {
+    font-size: 12px;
+}
+
+.text-blue-600 {
+    color: #2563eb;
+}
+
+.text-red-500 {
+    color: #ef4444;
+}
+
+.text-gray-800 {
+    color: #1f2937;
+}
+
+.hidden {
+    display: none;
+}

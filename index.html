@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Generator - PT ALIMA AMANAH LOGISTIC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="invoice-styles.css">
+</head>
+
+<body>
+
+    <!-- PANEL KONTROL -->
+    <div class="control-panel no-print">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-black text-gray-800">INVOICE GENERATOR <span class="text-red-600">PT ALIMA AMANAH
+                    LOGISTIC</span></h2>
+            <div class="flex gap-2">
+                <button onclick="saveTemplate()"
+                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-bold shadow-md transition-all text-sm">SIMPAN
+                    TEMPLATE</button>
+                <label
+                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-bold shadow-md transition-all cursor-pointer text-sm">
+                    LOAD TEMPLATE
+                    <input type="file" accept=".json" onchange="loadTemplate(event)" class="hidden">
+                </label>
+                <button onclick="exportJPG()"
+                    class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-bold shadow-md transition-all">SIMPAN
+                    JPG</button>
+                <button onclick="window.print()"
+                    class="bg-gray-800 hover:bg-black text-white px-6 py-2 rounded-lg font-bold shadow-md transition-all">CETAK
+                    PDF</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Kolom 1: Data Customer -->
+            <div class="space-y-4">
+                <div><label class="section-label">Nama Customer</label><input type="text" id="in-cust-name"
+                        class="input-field" value="PT. SATWA MEDIKA UTAMA"></div>
+                <div><label class="section-label">Alamat Customer</label><input type="text" id="in-cust-address"
+                        class="input-field" value="Jl. Goa ria taman bunga, sudiang, MKS"></div>
+                <div><label class="section-label">No. Invoice</label><input type="text" id="in-inv-no"
+                        class="input-field" value="0070 INV/01/2026"></div>
+            </div>
+
+            <!-- Kolom 2: Data Perusahaan -->
+            <div class="space-y-4">
+                <div><label class="section-label">Nama Perusahaan</label><input type="text" id="in-company-name"
+                        class="input-field" value="PT ALIMA AMANAH LOGISTIC"></div>
+                <div><label class="section-label">Alamat Perusahaan</label><input type="text" id="in-company-address"
+                        class="input-field" value="Jl. Borong Raya Baru 1 Lr.4 No.4, Makassar, Sulawesi Selatan 90233">
+                </div>
+                <div><label class="section-label">Telepon & Email</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="in-company-phone" class="input-field" value="0853-9994-9959">
+                        <input type="text" id="in-company-email" class="input-field" value="info@alimaamanah.com">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kolom 3: Data Lainnya -->
+            <div class="space-y-4">
+                <div><label class="section-label">Destination / PIC</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="in-dest" class="input-field" value="Makassar - Manado">
+                        <input type="text" id="in-pic" class="input-field" value="-">
+                    </div>
+                </div>
+                <div><label class="section-label">Penandatangan / Jabatan</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="in-signer" class="input-field" value="Erfan Indra Yayan">
+                        <input type="text" id="in-pos" class="input-field" value="Direktur">
+                    </div>
+                </div>
+                <div><label class="section-label">Logo & Tanda Tangan</label>
+                    <p class="text-xs text-gray-600 mt-1">Ganti file "company-logo.png" dan "signature.png" di folder
+                        project untuk mengubah logo dan tanda tangan</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel Data Bank -->
+        <div class="mt-6 border-t pt-4">
+            <label class="section-label">Informasi Bank</label>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                <div class="space-y-2">
+                    <div class="flex gap-2">
+                        <input type="text" id="in-bank1-name" class="input-field" value="Mandiri"
+                            placeholder="Nama Bank 1">
+                        <input type="text" id="in-bank1-account" class="input-field" value="174-00-1137953-4"
+                            placeholder="No. Rekening">
+                    </div>
+                    <input type="text" id="in-bank1-account-name" class="input-field" value="PT ALIMA AMANAH LOGISTIC"
+                        placeholder="Nama Pemegang Rekening">
+                </div>
+                <div class="space-y-2">
+                    <div class="flex gap-2">
+                        <input type="text" id="in-bank2-name" class="input-field" value="BCA" placeholder="Nama Bank 2">
+                        <input type="text" id="in-bank2-account" class="input-field" value="390-1050-188"
+                            placeholder="No. Rekening">
+                    </div>
+                    <input type="text" id="in-bank2-account-name" class="input-field" value="Erfan Indra Yayan Bakri"
+                        placeholder="Nama Pemegang Rekening">
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel Item Invoice dan Pajak -->
+        <div class="mt-6 border-t pt-4">
+            <div class="flex justify-between items-center mb-2">
+                <label class="section-label">Item Invoice</label>
+                <button onclick="addRow()" class="text-blue-600 font-bold text-sm">+ Tambah Baris</button>
+            </div>
+            <div id="item-inputs" class="space-y-2"></div>
+
+            <!-- Pengaturan Pajak dan Down Payment -->
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 border-t pt-4">
+                <div>
+                    <label class="section-label">PPN (%)</label>
+                    <input type="number" id="in-ppn-rate" class="input-field" value="1.1" step="0.1"
+                        oninput="updatePreview()">
+                </div>
+                <div>
+                    <label class="section-label">Down Payment (Rp)</label>
+                    <input type="number" id="in-down-payment" class="input-field" value="0" oninput="updatePreview()">
+                </div>
+                <div class="flex items-end">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="enable-ppn" class="mr-2" onchange="updatePreview()">
+                        <span class="text-sm">Aktifkan PPN</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AREA CAPTURE (1080x937) -->
+    <div id="capture-container">
+        <!-- Logo & Header -->
+        <div class="flex justify-between items-start">
+            <div class="flex items-center">
+                <!-- Company Logo -->
+                <img src="company-logo.png" alt="Company Logo" style="height: 60px; width: auto;">
+            </div>
+            <div class="text-[#1a365d] border-b-4 border-[#1a365d] pr-10 pb-1">
+                <h1 class="text-4xl font-bold tracking-[0.3em]">INVOICE</h1>
+            </div>
+        </div>
+
+        <!-- Outer Frame Ganda -->
+        <div class="outer-data-frame">
+            <!-- Info Pengirim & Customer -->
+            <div class="flex border-b border-black">
+                <div class="w-[55%] p-3 border-r border-black text-[13px] leading-tight">
+                    <p class="font-bold text-[14px] mb-1" id="company-name-display">PT ALIMA AMANAH LOGISTIC</p>
+                    <p id="company-address-1">Jl. Borong Raya Baru 1 Lr.4 No.4</p>
+                    <p id="company-address-2">Makassar, Sulawesi Selatan 90233</p>
+                    <p id="company-phone">Hp : 0853-9994-9959</p>
+                    <p id="company-email">Email : info@alimaamanah.com</p>
+                </div>
+                <div class="w-[45%] p-3 text-[13px]">
+                    <table class="w-full">
+                        <tr>
+                            <td class="w-24 font-bold">Customer</td>
+                            <td class="w-4 text-center">:</td>
+                            <td class="font-bold uppercase" id="out-cust-name">PT. SATWA MEDIKA UTAMA</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Alamat</td>
+                            <td class="text-center">:</td>
+                            <td id="out-cust-address">Jl. Goa ria taman bunga, sudiang, MKS</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">No. Invoice</td>
+                            <td class="text-center">:</td>
+                            <td class="font-bold" id="out-inv-no">0070 INV/01/2026</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Destination</td>
+                            <td class="text-center">:</td>
+                            <td id="out-dest">Makassar - Manado</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">PIC</td>
+                            <td class="text-center">:</td>
+                            <td id="out-pic">-</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Table Items -->
+            <table class="main-invoice-table">
+                <thead>
+                    <tr>
+                        <th class="w-12">NO.</th>
+                        <th class="text-center">DESCRIPTION</th>
+                        <th class="w-32">CONDITION</th>
+                        <th class="w-16">UNIT</th>
+                        <th class="w-16">KG</th>
+                        <th class="w-40">PRICE (IDR)</th>
+                        <th class="w-44">AMOUNT (IDR)</th>
+                    </tr>
+                </thead>
+                <tbody id="out-table-body">
+                    <!-- Data ditaruh di sini via JS -->
+                </tbody>
+                <tfoot class="font-bold">
+                    <tr>
+                        <td colspan="6">TOTAL</td>
+                        <td class="text-left">
+                            <div class="flex justify-between px-2"><span>Rp</span><span id="out-total">0</span></div>
+                        </td>
+                    </tr>
+                    <tr id="ppn-row">
+                        <td colspan="6">PPn <span id="ppn-rate-display">1,1</span>%</td>
+                        <td class="text-left">
+                            <div class="flex justify-between px-2"><span>Rp</span><span id="out-ppn">-</span></div>
+                        </td>
+                    </tr>
+                    <tr id="down-payment-row">
+                        <td colspan="6">DOWN PAYMENT</td>
+                        <td class="text-left">
+                            <div class="flex justify-between px-2"><span>Rp</span><span id="out-down-payment">-</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">GRAND TOTAL</td>
+                        <td class="text-left">
+                            <div class="flex justify-between px-2"><span>Rp</span><span id="out-grand-total">0</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <!-- Terbilang -->
+        <div class="mt-2 flex text-[14px]">
+            <span class="font-bold italic">Terbilang :</span>
+            <span id="out-terbilang" class="font-bold italic ml-10 border-b border-dotted border-black flex-1">Sepuluh
+                Juta Lima Ratus Ribu Rupiah</span>
+        </div>
+
+        <!-- Footer Section -->
+        <div class="mt-4 flex justify-between items-end">
+            <!-- Bank Info -->
+            <div>
+                <p class="font-bold italic underline text-[12px] mb-1">Pembayaran via transfer bank :</p>
+                <div class="bank-box">
+                    <table>
+                        <tr>
+                            <td class="w-16 font-bold" id="bank1-name">Mandiri</td>
+                            <td class="w-2">:</td>
+                            <td id="bank1-account">174-00-1137953-4</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Name</td>
+                            <td>:</td>
+                            <td class="font-bold" id="bank1-account-name">PT ALIMA AMANAH LOGISTIC</td>
+                        </tr>
+                        <tr class="h-2"></tr>
+                        <tr>
+                            <td class="font-bold" id="bank2-name">BCA</td>
+                            <td>:</td>
+                            <td id="bank2-account">390-1050-188</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Name</td>
+                            <td>:</td>
+                            <td class="font-bold" id="bank2-account-name">Erfan Indra Yayan Bakri</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Signature -->
+            <div class="text-center w-80 relative">
+                <p id="out-date" class="text-[13px] mb-1">Makassar, 16 Januari 2026</p>
+                <p class="font-bold text-[13px] mb-1" id="company-name-signature">PT ALIMA AMANAH LOGISTIC</p>
+
+                <div class="h-28 flex items-center justify-center relative -mb-28">
+                    <!-- Tanda tangan -->
+                    <img src="signature.png" alt="Signature" class="max-h-24 max-w-full object-contain relative z-10">
+                </div>
+
+                <!-- Logo perusahaan di bawah tanda tangan -->
+                <div class="flex flex-col items-center mb-1">
+                    <img src="company-logo.png" alt="Company Logo"
+                        style="height: 50px; width: auto; margin-bottom: 2px;">
+                    <p class="text-[11px] font-bold text-red-600" id="company-tagline">PT ALIMA AMANAH LOGISTIC</p>
+                </div>
+
+                <p class="font-bold underline uppercase text-[14px]" id="out-signer-display">Erfan Indra Yayan</p>
+                <p class="text-[12px]" id="out-pos-display">Direktur</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="invoice-functions.js"></script>
+</body>
+
+</html>

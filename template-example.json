@@ -1,0 +1,24 @@
+{
+  "companyName": "PT ALIMA AMANAH LOGISTIC",
+  "companyAddress": "Jl. Borong Raya Baru 1 Lr.4 No.4, Makassar, Sulawesi Selatan 90233",
+  "companyPhone": "0853-9994-9959",
+  "companyEmail": "info@alimaamanah.com",
+  "signer": "Erfan Indra Yayan",
+  "position": "Direktur",
+  "bank1Name": "Mandiri",
+  "bank1Account": "174-00-1137953-4",
+  "bank1AccountName": "PT ALIMA AMANAH LOGISTIC",
+  "bank2Name": "BCA",
+  "bank2Account": "390-1050-188",
+  "bank2AccountName": "Erfan Indra Yayan Bakri",
+  "ppnRate": "1.1",
+  "items": [
+    {
+      "desc": "Shipment 2 Unit Toyota Avanza S 1145 XU & Daihatsu Terios S 1284 WV, Makassar tujuan Manado & Manado tujuan Makassar.",
+      "cond": "Self Drive",
+      "unit": 1,
+      "kg": "-",
+      "price": 10500000
+    }
+  ]
+}
